@@ -48,15 +48,14 @@ func (s *Options) endpoint() string {
 	if s.Port != 0 {
 		port = s.Port
 	}
-	return fmt.Sprintf("%s:%d", s.Endpoint, port)
+	return formatEndpoint(s.Endpoint, port)
 }
 
 func (s *Options) database() string {
 	if s.Database != "" {
 		return s.Database
-	} else {
-		return rootDatabase
 	}
+	return rootDatabase
 }
 
 func (s *Options) clientTimeout() time.Duration {
