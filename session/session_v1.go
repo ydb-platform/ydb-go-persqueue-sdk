@@ -14,7 +14,7 @@ import (
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Discovery"
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Operations"
-	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_PersQueue_ClusterDiscovery"
+	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_PersQueue_V1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/keepalive"
@@ -174,10 +174,10 @@ func (lb *SessionV1) discoverCluster(ctx context.Context) error {
 		return nil
 	}
 	var (
-		res Ydb_PersQueue_ClusterDiscovery.DiscoverClustersResult
-		req Ydb_PersQueue_ClusterDiscovery.DiscoverClustersRequest
+		res Ydb_PersQueue_V1.DiscoverClustersResult
+		req Ydb_PersQueue_V1.DiscoverClustersRequest
 	)
-	req.WriteSessions = []*Ydb_PersQueue_ClusterDiscovery.WriteSessionParams{{
+	req.WriteSessions = []*Ydb_PersQueue_V1.WriteSessionParams{{
 		Topic:                lb.settings.Topic,
 		SourceId:             lb.settings.SourceID,
 		PartitionGroup:       lb.settings.PartitionGroup,

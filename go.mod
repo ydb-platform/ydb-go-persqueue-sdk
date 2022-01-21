@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/golang/protobuf v1.5.0
-	github.com/ydb-platform/ydb-go-genproto v0.0.0-20220119103339-113f12d14360
+	github.com/ydb-platform/ydb-go-genproto v0.0.0-20220121103726-1ca8c739f62a
 	github.com/ydb-platform/ydb-go-sdk/v3 v3.7.2
 	google.golang.org/grpc v1.38.0
 )
