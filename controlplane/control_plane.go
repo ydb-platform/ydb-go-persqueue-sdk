@@ -13,6 +13,7 @@ type ControlPlane interface {
 	DescribeTopic(ctx context.Context, topic string) (*Ydb_Persqueue_Protos_V1.DescribeTopicResult, error)
 	CreateTopic(ctx context.Context, req *Ydb_Persqueue_Protos_V1.CreateTopicRequest) error
 	AlterTopic(ctx context.Context, req *Ydb_Persqueue_Protos_V1.AlterTopicRequest) error
+	DropTopic(ctx context.Context, req *Ydb_Persqueue_Protos_V1.DropTopicRequest) error
 	AddReadRule(ctx context.Context, req *Ydb_Persqueue_Protos_V1.AddReadRuleRequest) error
 	RemoveReadRule(ctx context.Context, req *Ydb_Persqueue_Protos_V1.RemoveReadRuleRequest) error
 	Close() error
@@ -41,6 +42,11 @@ func (c *controlPlane) CreateTopic(ctx context.Context, req *Ydb_Persqueue_Proto
 func (c *controlPlane) AlterTopic(ctx context.Context, req *Ydb_Persqueue_Protos_V1.AlterTopicRequest) error {
 	var res Ydb_Persqueue_Protos_V1.AlterTopicResult
 	return c.lb.CallOperation(ctx, operations.AlterTopic, req, &res)
+}
+
+func (c *controlPlane) DropTopic(ctx context.Context, req *Ydb_Persqueue_Protos_V1.DropTopicRequest) error {
+	var res Ydb_Persqueue_Protos_V1.DropTopicResult
+	return c.lb.CallOperation(ctx, operations.DropTopic, req, &res)
 }
 
 func (c *controlPlane) AddReadRule(ctx context.Context, req *Ydb_Persqueue_Protos_V1.AddReadRuleRequest) error {
