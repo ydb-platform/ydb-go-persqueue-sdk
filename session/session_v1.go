@@ -10,11 +10,12 @@ import (
 	"github.com/ydb-platform/ydb-go-persqueue-sdk/operations"
 
 	"github.com/golang/protobuf/proto"
-	"github.com/ydb-platform/ydb-go-genproto/Ydb_Persqueue_V1"
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Discovery"
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Operations"
-	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_PersQueue_V1"
+	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_PersQueue_ClusterDiscovery"
+
+	"github.com/ydb-platform/ydb-go-genproto/Ydb_PersQueue_V1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/keepalive"
@@ -32,10 +33,10 @@ type SessionV1 struct {
 	SessionID string // for debug only
 
 	settings Options
-	Client   Ydb_Persqueue_V1.PersQueueServiceClient
+	Client   Ydb_PersQueue_V1.PersQueueServiceClient
 
 	conn            *grpc.ClientConn // base connection
-	discoveryClient Ydb_Persqueue_V1.ClusterDiscoveryServiceClient
+	discoveryClient Ydb_PersQueue_V1.ClusterDiscoveryServiceClient
 
 	logger log.Logger
 }
@@ -128,7 +129,7 @@ func (lb *SessionV1) createConnection(ctx context.Context) error {
 	}
 
 	lb.conn = conn
-	lb.Client = Ydb_Persqueue_V1.NewPersQueueServiceClient(conn)
+	lb.Client = Ydb_PersQueue_V1.NewPersQueueServiceClient(conn)
 	return nil
 }
 
@@ -174,10 +175,10 @@ func (lb *SessionV1) discoverCluster(ctx context.Context) error {
 		return nil
 	}
 	var (
-		res Ydb_PersQueue_V1.DiscoverClustersResult
-		req Ydb_PersQueue_V1.DiscoverClustersRequest
+		res Ydb_PersQueue_ClusterDiscovery.DiscoverClustersResult
+		req Ydb_PersQueue_ClusterDiscovery.DiscoverClustersRequest
 	)
-	req.WriteSessions = []*Ydb_PersQueue_V1.WriteSessionParams{{
+	req.WriteSessions = []*Ydb_PersQueue_ClusterDiscovery.WriteSessionParams{{
 		Topic:                lb.settings.Topic,
 		SourceId:             lb.settings.SourceID,
 		PartitionGroup:       lb.settings.PartitionGroup,
